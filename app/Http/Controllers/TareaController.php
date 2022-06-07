@@ -70,8 +70,33 @@ class TareaController extends Controller
         {        
             $obj = Tarea::find($request->id_tarea);
             $obj->estado = $request->estado;
-            $obj->porcentaje = $request->porcentaje;       
+            $obj->estado1 ="Proceso";
+            $obj->porcentaje = $request->porcentaje;   
+            if ($request->porcentaje==100) {
+                $obj->estado ="Terminado";
+                $obj->estado1 ="Terminado";  
+                $obj->estado2 ="Revision"; 
+            }    
             $obj->url_evidencia = $request->url_evidencia;   
+            $obj->update();
+            return response()->json(['status' => 200,'result' => $obj]);
+          
+        } catch (\Exception $e){   
+            return response()->json(['status' => 404,'message'=>$e->getMessage()]);
+        }   
+    }
+    public function Ssucess(Request $request)
+    {
+        // $this->validate($request, [
+        //     'id_tarea' => 'required',
+        //     'porcentaje' => 'required',
+        // ]);
+    
+        try
+        {        
+            $obj = Tarea::find($request->id_tarea);  
+            $obj->estado1 ="Aprobado";       
+            $obj->estado2 ="Aprobado";           
             $obj->update();
             return response()->json(['status' => 200,'result' => $obj]);
           

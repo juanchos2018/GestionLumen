@@ -79,9 +79,7 @@ class ProyectoController extends Controller
         $obj1->id_usuario=$request->id_usuario;
         $obj1->id_rol=1;
         $obj1->id_proyecto=$id_proyect;        
-        $obj1->save();   
-
-     
+        $obj1->save();       
 
       //  return response()->json(array('success' => true, 'last_insert_id' => $obj->id), 200);
       return response()->json(['status' => 200,'result' => $result,"lista"=>$order_detail ]);    
@@ -100,8 +98,7 @@ class ProyectoController extends Controller
         }
     }
     public function JefeProyectoView($id_proyecto)
-    {
-       
+    {       
         $obj = Proyecto::JefeProyectoView($id_proyecto);
         if($obj){
             return response()->json(['status' => 200,'result' => $obj]);
@@ -109,4 +106,15 @@ class ProyectoController extends Controller
             return response()->json(['status' => 404]);
         }
     }
+    public function Grafico1()
+    {       
+        try
+        {
+          $result= Proyecto::CantTareas();
+          return response()->json(['status' => 200,'result' => $result]);    
+        } catch (\Exception $e){   
+            return response()->json(['status' => 404,'message'=>$e->getMessage()]);
+        } 
+    }
+
 }

@@ -59,5 +59,19 @@ class MiembroProyectoController extends Controller
         return response()->json(array('success' => true, 'last_insert_id' => $obj->id), 200);
 
     }
+    public function update(Request $request){      
+    
+        try
+        {        
+            $obj = MiembroProyecto::find($request->id_miembro_proyecto);
+            $obj->id_rol = $request->id_rol;            
+            $obj->update();
+            return response()->json(['status' => 200,'result' => $obj]);
+          
+        } catch (\Exception $e){   
+            return response()->json(['status' => 404,'message'=>$e->getMessage()]);
+        }  
+    }
+
 
 }

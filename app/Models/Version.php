@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class Version extends Model
 {
     //
-
+    protected $primaryKey = 'id_version';
     public static function GetReponsableVersion($id_cronograma_elemento){
 
         $elementos = DB::table('versions')

@@ -40,7 +40,6 @@ class FaseController extends Controller
                 return response()->json(['status' => 200,'result' => $obj,'message' => "Registrado"]);              
             } 
 
-
             // $page="page1";
             // $obj  =new Fase();
             // $obj->nombre_fase=$request->nombre_fase;   

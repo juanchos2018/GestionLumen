@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-
+use App\Events\MessageEvent;
 
 $router->get('/elemento', 'ElementoController@get'); 
 $router->post('/elemento', 'ElementoController@Store');
@@ -46,7 +46,7 @@ $router->get('/proyecto-menber/{id_usuario}', 'ProyectoController@ListarProyecto
 
 $router->get('/proyecto-jefe/{id_proyecto}', 'ProyectoController@JefeProyectoView');
 
-
+$router->get('/proyecto-graficone', 'ProyectoController@Grafico1');
 
 $router->post('/cronogramaelementos', 'CronogramaElementoController@Store');
 
@@ -65,6 +65,8 @@ $router->get('/tipo-usuario', 'TipoUsuarioController@get');
 
 $router->post('/miembro', 'MiembroProyectoController@Store');
 $router->get('/miembros/{id_proyecto}', 'MiembroProyectoController@getMember');
+$router->put('/miembros/editrol', 'MiembroProyectoController@update');
+
 
 $router->post('/version', 'VersionController@Store');
 $router->get('/version/{id_cronograma_elemento}', 'VersionController@get');
@@ -74,16 +76,29 @@ $router->get('/tarea-version/{id_version}', 'TareaController@get');
 $router->get('/tarea-menber/{id_miembro_proyecto}', 'TareaController@GetTareasMenber');
 $router->put('/tarea-menber', 'TareaController@Update');
 $router->get('/tarea-view/{id_tarea}', 'TareaController@view');
+$router->put('/tarea-ssucess', 'TareaController@Ssucess');
 
 $router->post('/solicitud', 'SolicitudController@Store');
 $router->put('/solicitud', 'SolicitudController@Update');
+
 $router->get('/solicitud-pdf/{id_solicitud}', 'SolicitudController@ExportPDF');
+
+
+
 $router->get('/solicitud-jefe/{id_jefe}', 'SolicitudController@SolictudesJefe');
 
+$router->get('publish', 'PusherController@index');
+
+$router->get('/messages', 'ChatsController@fetchMessages');
+$router->post('/messages', 'ChatsController@sendMessage');
 
 
 
 
+$router->get('/fire', function(){
+    event(new MessageEvent);
+    return 'Fire';
+});
 
 
 

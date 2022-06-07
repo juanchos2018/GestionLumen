@@ -9,6 +9,8 @@ class Elemento extends Model
 {
     //
 
+    protected $primaryKey = 'id_elemento';
+
     public static function SearchElemento($search){       
        
         return DB::table('elementos')
