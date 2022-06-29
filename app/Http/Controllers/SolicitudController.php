@@ -21,6 +21,30 @@ class SolicitudController extends Controller
         }
     }  
 
+
+    public function SolictudesJefe2($id_jefe)
+    {
+      
+        $obj = Solicitud::SolictudesProyectoTres($id_jefe);
+        if($obj != null){
+            return response()->json(['status' => 200,'result' => $obj]);
+        }else{
+            return response()->json(['status' => 404]);
+        }
+    }  
+
+
+    public function SolictudProyecto($id_proyecto)
+    {
+      
+        $obj = Solicitud::SolictudesProyectoDos($id_proyecto);
+        if($obj != null){
+            return response()->json(['status' => 200,'result' => $obj]);
+        }else{
+            return response()->json(['status' => 404]);
+        }
+    }  
+
     public function Store(Request $request)
     {   
         // $this->validate($request, [
@@ -46,8 +70,7 @@ class SolicitudController extends Controller
             $obj->save();
             $id_solicitud=$obj->id_solicitud;
 
-            return response()->json(['status' => 200,'result' => $id_solicitud,'message' => "Registrado"]);
-            
+            return response()->json(['status' => 200,'result' => $id_solicitud,'message' => "Registrado"]);            
           
         } catch (\Exception $e){   
             return response()->json(['status' => 404,'message'=>$e->getMessage()]);
@@ -56,10 +79,7 @@ class SolicitudController extends Controller
 
     public function Update(Request $request)
     {
-        // $this->validate($request, [
-        //     'id_solicitud' => 'required',
-        //     'linkdocumento' => 'required',
-        // ]);
+       
          try
         {        
             $obj = Solicitud::find($request->id_solicitud);
@@ -72,7 +92,20 @@ class SolicitudController extends Controller
         }   
     }
 
-
+    public function UpdateStatus(Request $request)
+    {       
+         try
+        {        
+            $obj = Solicitud::find($request->id_solicitud);
+            $obj->estado = $request->estado;       
+            $obj->estado2 = $request->estado2;               
+            $obj->update();
+            return response()->json(['status' => 200,'result' => $obj]);
+          
+        } catch (\Exception $e){   
+            return response()->json(['status' => 404,'message'=>$e->getMessage()]);
+        }   
+    }
     public function ExportPDF($id_solicitud)
     {
         $html = Solicitud::SolicitudPdf($id_solicitud);          

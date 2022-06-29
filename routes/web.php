@@ -84,15 +84,25 @@ $router->put('/solicitud', 'SolicitudController@Update');
 $router->get('/solicitud-pdf/{id_solicitud}', 'SolicitudController@ExportPDF');
 
 
-
 $router->get('/solicitud-jefe/{id_jefe}', 'SolicitudController@SolictudesJefe');
+$router->get('/solicitud-jefedos/{id_jefe}', 'SolicitudController@SolictudesJefe2');
+$router->get('/solicitud-proyecto/{id_proyecto}', 'SolicitudController@SolictudProyecto');
+
+$router->put('/solicitud-update', 'SolicitudController@UpdateStatus');
 
 $router->get('publish', 'PusherController@index');
 
 $router->get('/messages', 'ChatsController@fetchMessages');
 $router->post('/messages', 'ChatsController@sendMessage');
 
+$router->post('/informe', 'InformeCambioController@store');
+$router->get('/informe', 'InformeCambioController@get');
+$router->put('/informe', 'InformeCambioController@update');
+$router->get('/informe-view/{id_solicitud}', 'InformeCambioController@View');
 
+
+
+$router->get('/informe-pdf/{id_informe}', 'InformeCambioController@InformePdf');
 
 
 $router->get('/fire', function(){

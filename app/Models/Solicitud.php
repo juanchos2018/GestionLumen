@@ -14,7 +14,7 @@ class Solicitud extends Model
         $solicituds = DB::table('solicituds')
         ->join('proyectos', 'solicituds.id_proyecto', '=', 'proyectos.id_proyecto')
         ->join('usuarios', 'solicituds.id_usuario', '=', 'usuarios.id_usuario')
-        ->select('solicituds.id_solicitud','solicituds.fecha','solicituds.objetivo','solicituds.estado2','solicituds.linkdocumento','proyectos.nombre_proyecto','usuarios.nombre_usuario')     
+        ->select('solicituds.id_solicitud','solicituds.fecha','solicituds.objetivo','solicituds.estado2','solicituds.linkdocumento','proyectos.id_proyecto','proyectos.nombre_proyecto','usuarios.nombre_usuario')     
         ->where('solicituds.id_jefe', $id_jefe)     
         ->get();   
          return $solicituds;
@@ -23,11 +23,31 @@ class Solicitud extends Model
         $proyectos = DB::table('solicituds')
         ->join('proyectos', 'solicituds.id_proyecto', '=', 'id_proyecto.id_rol')
         ->join('usuarios', 'solicituds.id_usuario', '=', 'usuarios.id_usuario')
-        ->select('solicituds.fecha','solicituds.objetivo','solicituds.estado2','proyectos.nombre_proyecto','proyectos.fecha_ini','proyectos.fecha_fin')     
+        ->select('solicituds.fecha','solicituds.objetivo','solicituds.estado2','proyectos.id_proyecto','proyectos.nombre_proyecto','proyectos.fecha_ini','proyectos.fecha_fin')     
         ->where('solicituds.id_jefe', $id_jefe)     
-        ->get();    
-        
-         return $proyectos;
+        ->get();            
+        return $proyectos;
+    }
+    public static function SolictudesProyectoDos($id_proyecto){       
+        $proyectos = DB::table('solicituds')
+        ->join('proyectos', 'solicituds.id_proyecto', '=', 'proyectos.id_proyecto')
+        ->join('usuarios', 'solicituds.id_usuario', '=', 'usuarios.id_usuario')
+        ->select('solicituds.id_solicitud','solicituds.fecha','solicituds.objetivo','solicituds.estado2','solicituds.linkdocumento','proyectos.id_proyecto','proyectos.nombre_proyecto','usuarios.nombre_usuario')     
+        ->where('solicituds.id_proyecto', $id_proyecto)     
+        ->get();            
+        return $proyectos;
+    }
+    
+
+    public static function SolictudesProyectoTres($id_jefe){       
+        $proyectos = DB::table('solicituds')
+        ->join('proyectos', 'solicituds.id_proyecto', '=', 'proyectos.id_proyecto')
+        ->join('usuarios', 'solicituds.id_usuario', '=', 'usuarios.id_usuario')
+        ->leftjoin('informe_cambios', 'solicituds.id_solicitud', '=', 'informe_cambios.id_solicitud')
+        ->select('solicituds.id_solicitud','solicituds.fecha','solicituds.objetivo','solicituds.estado2','solicituds.linkdocumento','proyectos.id_proyecto','proyectos.nombre_proyecto','usuarios.nombre_usuario','informe_cambios.estado')     
+        ->where('solicituds.id_jefe', $id_jefe)     
+        ->get();            
+        return $proyectos;
     }
 
     public static function SolicitudPdf($id_solicitud){
